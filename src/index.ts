@@ -3,3 +3,4 @@
  */
 
  export {ExpandableGroup} from './lib/expandable-group.view'
+ export {Modal} from './lib/modal.view'
