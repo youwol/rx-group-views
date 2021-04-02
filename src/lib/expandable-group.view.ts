@@ -77,9 +77,9 @@ export namespace ExpandableGroup {
                 contentView: (state: State) => VirtualDOM
             }) {
 
-            Object.assign(this, rest)
+            Object.assign(this, {class:View.defaultClass}, rest)
+            
             this.state = state
-            this.className = rest['className'] || View.defaultClass
 
             this.children = [
                 {
