@@ -37,7 +37,7 @@ export namespace Modal {
         constructor( { state, contentView, ...rest } : { state: State, contentView: (State)=>VirtualDOM }) {
 
             Object.assign(this, rest)
-            
+            this.state = state
             this.class = rest['class'] || rest['className'] || View.defaultClass
             this.style = rest['style'] || View.defaultStyle
             this.children = [
