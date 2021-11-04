@@ -44,13 +44,14 @@ export namespace Modal {
             this.state = state
             this.class = rest['class'] || rest['className'] || View.defaultClass
             this.style = rest['style'] || View.defaultStyle
+            let view = contentView(state)
+            view.onclick = (ev) => ev.stopPropagation()
             this.children = [
                 {
-                    class:'d-flex flex-columns justify-content-around mt-auto mb-auto',
-                    children:[
-                        contentView(state)
-                    ],
-                    onclick: (ev) => ev.stopPropagation()
+                    class: 'd-flex flex-columns justify-content-around mt-auto mb-auto',
+                    children: [
+                        view
+                    ]
                 }
             ]
         }
