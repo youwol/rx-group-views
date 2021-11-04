@@ -37,6 +37,10 @@ export namespace Modal {
         constructor( { state, contentView, ...rest } : { state: State, contentView: (State)=>VirtualDOM }) {
 
             Object.assign(this, rest)
+            document.onkeydown = (ev: KeyboardEvent) => {
+                if (ev.key == "Escape")
+                    this.state.cancel$.next(ev)
+            }
             this.state = state
             this.class = rest['class'] || rest['className'] || View.defaultClass
             this.style = rest['style'] || View.defaultStyle
