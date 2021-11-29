@@ -7,7 +7,7 @@
         "view",
         "group"
     ],
-    "version": "0.0.4",
+    "version": "0.0.5",
     "description": "Grouping widgets using flux-view",
     "author": "Guillaume Reinisch",
     "license": "MIT",
@@ -22,6 +22,7 @@
         "test-coverage": "jest -c ./jest.config.js --rootDir . --collect-coverage --collectCoverageFrom=./src/lib/**/*.ts --coverageDirectory=./coverage/$TARGET --runInBand",
         "publish-npm-public": "yarn build:prod && yarn test-coverage && yarn publish --access public"
     },
+
     "repository": {
         "type": "git",
         "url": ""
