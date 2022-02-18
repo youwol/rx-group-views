@@ -29,7 +29,7 @@ export namespace ExpandableGroup {
                     tag: 'i',
                     class: attr$(
                         state.expanded$,
-                        (d) => (d ? 'fa-caret-down' : 'fa-caret-right'),
+                        (d): string => (d ? 'fa-caret-down' : 'fa-caret-right'),
                         { wrapper: (d) => 'px-2 fas ' + d },
                     ),
                 },
