@@ -7,7 +7,7 @@
         "view",
         "group"
     ],
-    "version": "0.0.6-next",
+    "version": "0.0.7",
     "description": "Grouping widgets using flux-view",
     "author": "Guillaume Reinisch",
     "license": "MIT",
@@ -30,7 +30,6 @@
         "format-prettier": "prettier --write .",
         "format-eslint": "eslint --fix ."
     },
-
     "repository": {
         "type": "git",
         "url": ""
@@ -51,11 +50,11 @@
         "eslint-plugin-import": "^2.25.2",
         "eslint-plugin-jest": "^25.2.2",
         "eslint-plugin-unused-imports": "^1.1.5",
-        "eslint-webpack-plugin": "2.5.3",
         "prettier": "^2.4.1",
-        "prettier-plugin-properties": "^0.1.0",        "eslint-loader": "4.0.2",
+        "prettier-plugin-properties": "^0.1.0",
+        "eslint-loader": "4.0.2",
         "jest": "26.6.3",
-        "jest-junit": "12.0.0",
+        "jest-junit": "13.0.0",
         "rxjs": "6.x",
         "rxjs-spy": "7.5.3",
         "ts-jest": "26.4.4",
