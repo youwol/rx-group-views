@@ -12,7 +12,7 @@ export namespace ExpandableGroup {
       this.expanded$ =
         expanded$ instanceof BehaviorSubject
           ? expanded$
-          : new BehaviorSubject<boolean>(expanded$ as boolean);
+          : new BehaviorSubject<boolean>(expanded$);
     }
   }
 
@@ -29,7 +29,7 @@ export namespace ExpandableGroup {
           tag: "i",
           class: attr$(
             state.expanded$,
-            (d) => (d ? "fa-caret-down" : "fa-caret-right"),
+            (d): string => (d ? "fa-caret-down" : "fa-caret-right"),
             { wrapper: (d) => "px-2 fas " + d }
           ),
         },
