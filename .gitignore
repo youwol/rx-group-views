@@ -9,3 +9,5 @@ npm-debug.log
 out-*
 result-*
 *.so
+*.iml
+yarn-error.log

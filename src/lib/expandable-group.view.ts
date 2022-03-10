@@ -1,93 +1,98 @@
-import { attr$, child$, Stream$, VirtualDOM } from "@youwol/flux-view";
-import { BehaviorSubject } from "rxjs";
+import { attr$, child$, Stream$, VirtualDOM } from '@youwol/flux-view'
+import { BehaviorSubject } from 'rxjs'
 
 export namespace ExpandableGroup {
-  export class State {
-    expanded$: BehaviorSubject<boolean>;
+    export class State {
+        expanded$: BehaviorSubject<boolean>
 
-    constructor(
-      public readonly name: string,
-      expanded$: BehaviorSubject<boolean> | boolean = false
-    ) {
-      this.expanded$ =
-        expanded$ instanceof BehaviorSubject
-          ? expanded$
-          : new BehaviorSubject<boolean>(expanded$);
+        constructor(
+            public readonly name: string,
+            expanded$: BehaviorSubject<boolean> | boolean = false,
+        ) {
+            this.expanded$ =
+                expanded$ instanceof BehaviorSubject
+                    ? expanded$
+                    : new BehaviorSubject<boolean>(expanded$)
+        }
     }
-  }
 
-  export let defaultHeaderClass =
-    "fv-bg-background-alt fv-text-primary fv-color-primary rounded fv-pointer d-flex align-items-center";
-  export let defaultBodyClass =
-    "fv-bg-background fv-text-primary fv-color-primary rounded p-3";
+    export const defaultHeaderClass =
+        'fv-bg-background-alt fv-text-primary fv-color-primary rounded fv-pointer d-flex align-items-center'
+    export const defaultBodyClass =
+        'fv-bg-background fv-text-primary fv-color-primary rounded p-3'
 
-  export function defaultHeaderView(state: State) {
-    return {
-      class: defaultHeaderClass,
-      children: [
-        {
-          tag: "i",
-          class: attr$(
-            state.expanded$,
-            (d): string => (d ? "fa-caret-down" : "fa-caret-right"),
-            { wrapper: (d) => "px-2 fas " + d }
-          ),
-        },
-        {
-          tag: "span",
-          class: "px-2",
-          innerText: state.name,
-          style: { "user-select": "none" },
-        },
-      ],
-    };
-  }
+    export function defaultHeaderView(state: State) {
+        return {
+            class: defaultHeaderClass,
+            children: [
+                {
+                    tag: 'i',
+                    class: attr$(
+                        state.expanded$,
+                        (d): string => (d ? 'fa-caret-down' : 'fa-caret-right'),
+                        { wrapper: (d) => 'px-2 fas ' + d },
+                    ),
+                },
+                {
+                    tag: 'span',
+                    class: 'px-2',
+                    innerText: state.name,
+                    style: { 'user-select': 'none' },
+                },
+            ],
+        }
+    }
 
-  export function simpleExpandableGroup(name: string, contentView: VirtualDOM) {
-    return new ExpandableGroup.View({
-      state: new ExpandableGroup.State(name),
-      headerView: ExpandableGroup.defaultHeaderView,
-      contentView: () => ({
-        class: defaultBodyClass,
-        children: [contentView],
-      }),
-    });
-  }
+    export function simpleExpandableGroup(
+        name: string,
+        contentView: VirtualDOM,
+    ) {
+        return new ExpandableGroup.View({
+            state: new ExpandableGroup.State(name),
+            headerView: ExpandableGroup.defaultHeaderView,
+            contentView: () => ({
+                class: defaultBodyClass,
+                children: [contentView],
+            }),
+        })
+    }
 
-  export class View implements VirtualDOM {
-    static defaultClass = "d-flex flex-column ";
-    public readonly state: State;
+    export class View implements VirtualDOM {
+        static defaultClass = 'd-flex flex-column '
+        public readonly state: State
 
-    public readonly className: string | Stream$<unknown, string>;
-    children: [VirtualDOM, VirtualDOM];
+        public readonly className: string | Stream$<unknown, string>
+        children: [VirtualDOM, VirtualDOM]
 
-    constructor({
-      state,
-      headerView,
-      contentView,
-      ...rest
-    }: {
-      state: State;
-      headerView: (state: State) => VirtualDOM;
-      contentView: (state: State) => VirtualDOM;
-      [_key: string]: unknown;
-    }) {
-      Object.assign(this, { class: View.defaultClass }, rest);
+        constructor({
+            state,
+            headerView,
+            contentView,
+            ...rest
+        }: {
+            state: State
+            headerView: (state: State) => VirtualDOM
+            contentView: (state: State) => VirtualDOM
+            [_key: string]: unknown
+        }) {
+            Object.assign(this, { class: View.defaultClass }, rest)
 
-      this.state = state;
+            this.state = state
 
-      this.children = [
-        {
-          children: [headerView(this.state)],
-          onclick: () =>
-            this.state.expanded$.next(!this.state.expanded$.getValue()),
-        },
-        child$(this.state.expanded$, (expanded) =>
-          expanded ? contentView(this.state) : {}
-        ),
-      ];
+            this.children = [
+                {
+                    children: [headerView(this.state)],
+                    onclick: () =>
+                        this.state.expanded$.next(
+                            !this.state.expanded$.getValue(),
+                        ),
+                },
+                child$(this.state.expanded$, (expanded) =>
+                    expanded ? contentView(this.state) : {},
+                ),
+            ]
 
-      /*
+            /*
             this.data = state$.pipe( map( state => ({
                 class: userClasses, style: userStyle,
                 children: {
@@ -105,9 +110,9 @@ export namespace ExpandableGroup {
                                 })
                             )
                         }
-                    }                    
+                    }
                 }
             })))*/
+        }
     }
-  }
 }
