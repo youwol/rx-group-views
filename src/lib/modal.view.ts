@@ -61,7 +61,6 @@ export namespace Modal {
                 (rest['style'] as { [key: string]: string }) ||
                 View.defaultStyle
             const view = contentView(state)
-            view.onclick = (ev) => ev.stopPropagation()
             this.children = [
                 {
                     class: 'd-flex flex-columns justify-content-around mt-auto mb-auto',
