@@ -21,10 +21,11 @@ export namespace Modal {
             position: 'absolute',
             top: '0px',
             left: '0px',
-            'z-index': '100',
+            zIndex: '100',
             width: '100vw',
             height: '100vh',
-            'background-color': 'rgba(0,0,0,0.5)',
+            backdropFilter: 'blur(3px)',
+            backgroundColor: 'rgba(0,0,0,0.8)',
         }
         static defaultClass = 'd-flex justify-content-around'
 
