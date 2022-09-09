@@ -1,3 +1,8 @@
+const apiVersion = "01"
+const externals = {
+    "rxjs": "rxjs_APIv6",
+    "@youwol/flux-view": "@youwol/flux-view_APIv01"
+}
 const path = require('path')
 const pkg = require('./package.json')
 const ROOT = path.resolve(__dirname, 'src')
@@ -20,7 +25,7 @@ module.exports = {
         path: DESTINATION,
         libraryTarget: 'umd',
         umdNamedDefine: true,
-        library: pkg.name,
+        library: `${pkg.name}_APIv${apiVersion}`,
         filename: pkg.name + '.js',
         globalObject: `(typeof self !== 'undefined' ? self : this)`,
     },
@@ -28,31 +33,12 @@ module.exports = {
         extensions: ['.ts', 'tsx', '.js'],
         modules: [ROOT, 'node_modules'],
     },
-    externals: [
-        {
-            rxjs: 'rxjs',
-            'rxjs/operators': {
-                commonjs: 'rxjs/operators',
-                commonjs2: 'rxjs/operators',
-                root: ['rxjs', 'operators'],
-            },
-            '@youwol/flux-view': {
-                commonjs: '@youwol/flux-view',
-                commonjs2: '@youwol/flux-view',
-                root: ['@youwol/flux-view'],
-            },
-        },
-    ],
+    externals,
     module: {
         rules: [
             {
-                enforce: 'pre',
-                test: /\.js$/,
-                use: 'source-map-loader',
-            },
-            {
                 test: /\.ts$/,
-                use: [{ loader: 'awesome-typescript-loader' }],
+                use: [{ loader: 'ts-loader' }],
                 exclude: /node_modules/,
             },
         ],
