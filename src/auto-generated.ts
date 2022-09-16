@@ -32,7 +32,7 @@ const exportedSymbols = {
 export const setup = {
     name:'@youwol/fv-group',
         assetId:'QHlvdXdvbC9mdi1ncm91cA==',
-    version:'0.2.1',
+    version:'0.2.2-wip',
     shortDescription:"Grouping widgets using flux-view",
     developerDocumentation:'https://platform.youwol.com/applications/@youwol/cdn-explorer/latest?package=@youwol/fv-group',
     npmPackage:'https://www.npmjs.com/package/@youwol/fv-group',
