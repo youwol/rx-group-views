@@ -33,9 +33,7 @@ export namespace Modal {
         public readonly class: string
         public readonly style: { [key: string]: string }
 
-        public readonly onclick = (ev: MouseEvent) => {
-            this.state.cancel$.next(ev)
-        }
+        public readonly onclick: (ev: MouseEvent) => void
 
         public readonly children: [VirtualDOM]
 
@@ -50,7 +48,9 @@ export namespace Modal {
         }) {
             Object.assign(this, rest)
             document.onkeydown = (ev: KeyboardEvent) => {
-                if (ev.key == 'Escape') this.state.cancel$.next(ev)
+                if (ev.key == 'Escape') {
+                    this.state.cancel$.next(ev)
+                }
             }
             this.state = state
             this.class =
@@ -67,6 +67,13 @@ export namespace Modal {
                     children: [view],
                 },
             ]
+            this.onclick = (
+                ev: MouseEvent & { target: { vDom?: VirtualDOM } },
+            ) => {
+                if (ev.target.vDom && ev.target.vDom == this) {
+                    this.state.cancel$.next(ev)
+                }
+            }
         }
     }
 }
