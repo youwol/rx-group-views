@@ -16,6 +16,14 @@ const externals = {
         "commonjs": "@youwol/flux-view",
         "commonjs2": "@youwol/flux-view",
         "root": "@youwol/flux-view_APIv1"
+    },
+    "rxjs/operators": {
+        "commonjs": "rxjs/operators",
+        "commonjs2": "rxjs/operators",
+        "root": [
+            "rxjs_APIv6",
+            "operators"
+        ]
     }
 }
 const exportedSymbols = {
@@ -46,7 +54,7 @@ const entries = {
 export const setup = {
     name:'@youwol/fv-group',
         assetId:'QHlvdXdvbC9mdi1ncm91cA==',
-    version:'0.2.2',
+    version:'0.2.3-wip',
     shortDescription:"Grouping widgets using flux-view",
     developerDocumentation:'https://platform.youwol.com/applications/@youwol/cdn-explorer/latest?package=@youwol/fv-group',
     npmPackage:'https://www.npmjs.com/package/@youwol/fv-group',
@@ -92,7 +100,7 @@ export const setup = {
         const parameters = installParameters || {}
         const scripts = [
             ...(parameters.scripts || []),
-            `@youwol/fv-group#0.2.2~dist/@youwol/fv-group/${entry.name}.js`
+            `@youwol/fv-group#0.2.3-wip~dist/@youwol/fv-group/${entry.name}.js`
         ]
         const modules = [
             ...(parameters.modules || []),
