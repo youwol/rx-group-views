@@ -1,5 +1,6 @@
 import { VirtualDOM } from '@youwol/flux-view'
-import { Subject } from 'rxjs'
+import { merge, Subject } from 'rxjs'
+import { take } from 'rxjs/operators'
 
 export namespace Modal {
     export class State {
@@ -47,14 +48,18 @@ export namespace Modal {
             [_key: string]: unknown
         }) {
             Object.assign(this, rest)
+            this.state = state
             const originalOnKeyDown = document.onkeydown
+            merge(this.state.cancel$, this.state.ok$)
+                .pipe(take(1))
+                .subscribe(() => {
+                    document.onkeydown = originalOnKeyDown
+                })
             document.onkeydown = (ev: KeyboardEvent) => {
                 if (ev.key == 'Escape') {
-                    document.onkeydown = originalOnKeyDown
                     this.state.cancel$.next(ev)
                 }
             }
-            this.state = state
             this.class =
                 (rest['class'] as string) ||
                 (rest['className'] as string) ||
