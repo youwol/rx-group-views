@@ -47,8 +47,10 @@ export namespace Modal {
             [_key: string]: unknown
         }) {
             Object.assign(this, rest)
+            const originalOnKeyDown = document.onkeydown
             document.onkeydown = (ev: KeyboardEvent) => {
                 if (ev.key == 'Escape') {
+                    document.onkeydown = originalOnKeyDown
                     this.state.cancel$.next(ev)
                 }
             }
