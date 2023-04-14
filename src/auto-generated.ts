@@ -1,11 +1,10 @@
 
 const runTimeDependencies = {
-    "load": {
+    "externals": {
         "rxjs": "^6.5.5",
         "@youwol/flux-view": "^1.0.3"
     },
-    "differed": {},
-    "includedInBundle": []
+    "includedInBundle": {}
 }
 const externals = {
     "rxjs": {
@@ -29,10 +28,25 @@ const exportedSymbols = {
         "exportedSymbol": "@youwol/flux-view"
     }
 }
+
+const mainEntry : {entryFile: string,loadDependencies:string[]} = {
+    "entryFile": "index.ts",
+    "loadDependencies": [
+        "rxjs",
+        "@youwol/flux-view"
+    ]
+}
+
+const secondaryEntries : {[k:string]:{entryFile: string, name: string, loadDependencies:string[]}}= {}
+
+const entries = {
+     '@youwol/fv-group': 'index.ts',
+    ...Object.values(secondaryEntries).reduce( (acc,e) => ({...acc, [`@youwol/fv-group/${e.name}`]:e.entryFile}), {})
+}
 export const setup = {
     name:'@youwol/fv-group',
         assetId:'QHlvdXdvbC9mdi1ncm91cA==',
-    version:'0.2.1',
+    version:'0.2.2',
     shortDescription:"Grouping widgets using flux-view",
     developerDocumentation:'https://platform.youwol.com/applications/@youwol/cdn-explorer/latest?package=@youwol/fv-group',
     npmPackage:'https://www.npmjs.com/package/@youwol/fv-group',
@@ -42,7 +56,62 @@ export const setup = {
     runTimeDependencies,
     externals,
     exportedSymbols,
+    entries,
+    secondaryEntries,
     getDependencySymbolExported: (module:string) => {
         return `${exportedSymbols[module].exportedSymbol}_APIv${exportedSymbols[module].apiKey}`
+    },
+
+    installMainModule: ({cdnClient, installParameters}:{
+        cdnClient:{install:(unknown) => Promise<Window>},
+        installParameters?
+    }) => {
+        const parameters = installParameters || {}
+        const scripts = parameters.scripts || []
+        const modules = [
+            ...(parameters.modules || []),
+            ...mainEntry.loadDependencies.map( d => `${d}#${runTimeDependencies.externals[d]}`)
+        ]
+        return cdnClient.install({
+            ...parameters,
+            modules,
+            scripts,
+        }).then(() => {
+            return window[`@youwol/fv-group_APIv02`]
+        })
+    },
+    installAuxiliaryModule: ({name, cdnClient, installParameters}:{
+        name: string,
+        cdnClient:{install:(unknown) => Promise<Window>},
+        installParameters?
+    }) => {
+        const entry = secondaryEntries[name]
+        if(!entry){
+            throw Error(`Can not find the secondary entry '${name}'. Referenced in template.py?`)
+        }
+        const parameters = installParameters || {}
+        const scripts = [
+            ...(parameters.scripts || []),
+            `@youwol/fv-group#0.2.2~dist/@youwol/fv-group/${entry.name}.js`
+        ]
+        const modules = [
+            ...(parameters.modules || []),
+            ...entry.loadDependencies.map( d => `${d}#${runTimeDependencies.externals[d]}`)
+        ]
+        return cdnClient.install({
+            ...parameters,
+            modules,
+            scripts,
+        }).then(() => {
+            return window[`@youwol/fv-group/${entry.name}_APIv02`]
+        })
+    },
+    getCdnDependencies(name?: string){
+        if(name && !secondaryEntries[name]){
+            throw Error(`Can not find the secondary entry '${name}'. Referenced in template.py?`)
+        }
+        const deps = name ? secondaryEntries[name].loadDependencies : mainEntry.loadDependencies
+
+        return deps.map( d => `${d}#${runTimeDependencies.externals[d]}`)
     }
 }
