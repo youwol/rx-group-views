@@ -54,7 +54,7 @@ const entries = {
 export const setup = {
     name:'@youwol/fv-group',
         assetId:'QHlvdXdvbC9mdi1ncm91cA==',
-    version:'0.2.3-wip',
+    version:'0.2.3',
     shortDescription:"Grouping widgets using flux-view",
     developerDocumentation:'https://platform.youwol.com/applications/@youwol/cdn-explorer/latest?package=@youwol/fv-group',
     npmPackage:'https://www.npmjs.com/package/@youwol/fv-group',
@@ -100,7 +100,7 @@ export const setup = {
         const parameters = installParameters || {}
         const scripts = [
             ...(parameters.scripts || []),
-            `@youwol/fv-group#0.2.3-wip~dist/@youwol/fv-group/${entry.name}.js`
+            `@youwol/fv-group#0.2.3~dist/@youwol/fv-group/${entry.name}.js`
         ]
         const modules = [
             ...(parameters.modules || []),
