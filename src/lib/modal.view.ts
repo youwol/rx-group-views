@@ -25,8 +25,8 @@ export namespace Modal {
             zIndex: '100',
             width: '100vw',
             height: '100vh',
-            backdropFilter: 'blur(3px)',
-            backgroundColor: 'rgba(0,0,0,0.8)',
+            backdropFilter: 'blur(2px)',
+            backgroundColor: 'rgba(220,159,53,5%)',
         }
         static defaultClass = 'd-flex justify-content-around'
 
