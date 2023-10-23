@@ -1,5 +1,5 @@
 import { VirtualDOM } from '@youwol/flux-view'
-import { merge, Subject } from 'rxjs'
+import { BehaviorSubject, merge, Subject } from 'rxjs'
 import { take } from 'rxjs/operators'
 
 export namespace Modal {
@@ -34,9 +34,13 @@ export namespace Modal {
         public readonly class: string
         public readonly style: { [key: string]: string }
 
-        public readonly onclick: (ev: MouseEvent) => void
+        public readonly onclick: (
+            ev: MouseEvent & { target: { vDom?: VirtualDOM } },
+        ) => void
 
         public readonly children: [VirtualDOM]
+
+        public readonly isMousePressed$ = new BehaviorSubject(false)
 
         constructor({
             state,
@@ -72,12 +76,22 @@ export namespace Modal {
                 {
                     class: 'd-flex flex-columns justify-content-around mt-auto mb-auto',
                     children: [view],
+                    onmousedown: () => {
+                        this.isMousePressed$.next(true)
+                    },
+                    onmouseup: () => {
+                        this.isMousePressed$.next(false)
+                    },
                 },
             ]
             this.onclick = (
                 ev: MouseEvent & { target: { vDom?: VirtualDOM } },
             ) => {
-                if (ev.target.vDom && ev.target.vDom == this) {
+                if (
+                    ev.target.vDom &&
+                    ev.target.vDom == this &&
+                    !this.isMousePressed$.value
+                ) {
                     this.state.cancel$.next(ev)
                 }
             }
