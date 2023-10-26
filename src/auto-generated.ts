@@ -54,9 +54,9 @@ const entries = {
 export const setup = {
     name:'@youwol/fv-group',
         assetId:'QHlvdXdvbC9mdi1ncm91cA==',
-    version:'0.2.4',
+    version:'0.2.5',
     shortDescription:"Grouping widgets using flux-view",
-    developerDocumentation:'https://platform.youwol.com/applications/@youwol/cdn-explorer/latest?package=@youwol/fv-group',
+    developerDocumentation:'https://platform.youwol.com/applications/@youwol/cdn-explorer/latest?package=@youwol/fv-group&tab=doc',
     npmPackage:'https://www.npmjs.com/package/@youwol/fv-group',
     sourceGithub:'https://github.com/youwol/fv-group',
     userGuide:'https://l.youwol.com/doc/@youwol/fv-group',
@@ -71,7 +71,7 @@ export const setup = {
     },
 
     installMainModule: ({cdnClient, installParameters}:{
-        cdnClient:{install:(unknown) => Promise<Window>},
+        cdnClient:{install:(unknown) => Promise<WindowOrWorkerGlobalScope>},
         installParameters?
     }) => {
         const parameters = installParameters || {}
@@ -90,7 +90,7 @@ export const setup = {
     },
     installAuxiliaryModule: ({name, cdnClient, installParameters}:{
         name: string,
-        cdnClient:{install:(unknown) => Promise<Window>},
+        cdnClient:{install:(unknown) => Promise<WindowOrWorkerGlobalScope>},
         installParameters?
     }) => {
         const entry = secondaryEntries[name]
@@ -100,7 +100,7 @@ export const setup = {
         const parameters = installParameters || {}
         const scripts = [
             ...(parameters.scripts || []),
-            `@youwol/fv-group#0.2.4~dist/@youwol/fv-group/${entry.name}.js`
+            `@youwol/fv-group#0.2.5~dist/@youwol/fv-group/${entry.name}.js`
         ]
         const modules = [
             ...(parameters.modules || []),
