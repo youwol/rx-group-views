@@ -1,6 +1,6 @@
 # @youwol/rx-group-views
 
-Grouping widgets using flux-view
+Grouping widgets using rx-vdom
 
 This library is part of the hybrid cloud/local ecosystem
 [YouWol](https://platform.youwol.com/applications/@youwol/platform/latest).

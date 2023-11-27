@@ -55,7 +55,7 @@ export const setup = {
     name:'@youwol/rx-group-views',
         assetId:'QHlvdXdvbC9yeC1ncm91cC12aWV3cw==',
     version:'0.3.1-wip',
-    shortDescription:"Grouping widgets using flux-view",
+    shortDescription:"Grouping widgets using rx-vdom",
     developerDocumentation:'https://platform.youwol.com/applications/@youwol/cdn-explorer/latest?package=@youwol/rx-group-views&tab=doc',
     npmPackage:'https://www.npmjs.com/package/@youwol/rx-group-views',
     sourceGithub:'https://github.com/youwol/rx-group-views',

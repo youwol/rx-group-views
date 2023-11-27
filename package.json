@@ -1,6 +1,6 @@
 {
     "name": "@youwol/rx-group-views",
-    "description": "Grouping widgets using flux-view",
+    "description": "Grouping widgets using rx-vdom",
     "version": "0.3.1-wip",
     "author": "greinisch@youwol.com",
     "homepage": "https://github.com/youwol/rx-group-views#README.md",
