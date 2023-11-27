@@ -1,5 +1,5 @@
 {
-    "name": "@youwol/fv-group",
+    "name": "@youwol/rx-group-views",
     "description": "Grouping widgets using flux-view",
     "version": "0.3.0-wip",
     "author": "greinisch@youwol.com",
