@@ -5,4 +5,4 @@ export type Configuration = {
     WithFluxView: false
 }
 
-type DevTags = 'div'
+type DevTags = 'div' | 'i' | 'span'
