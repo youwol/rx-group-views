@@ -1,4 +1,9 @@
-import { attr$, child$, Stream$, VirtualDOM } from '@youwol/flux-view'
+import {
+    VirtualDOM,
+    AnyVirtualDOM,
+    AttributeLike,
+    ChildrenLike,
+} from '@youwol/rx-vdom'
 import { BehaviorSubject } from 'rxjs'
 
 export namespace ExpandableGroup {
@@ -21,23 +26,25 @@ export namespace ExpandableGroup {
     export const defaultBodyClass =
         'fv-bg-background fv-text-primary fv-color-primary rounded p-3'
 
-    export function defaultHeaderView(state: State) {
+    export function defaultHeaderView(state: State): VirtualDOM<'div'> {
         return {
+            tag: 'div',
             class: defaultHeaderClass,
             children: [
                 {
                     tag: 'i',
-                    class: attr$(
-                        state.expanded$,
-                        (d): string => (d ? 'fa-caret-down' : 'fa-caret-right'),
-                        { wrapper: (d) => 'px-2 fas ' + d },
-                    ),
+                    class: {
+                        source$: state.expanded$,
+                        vdomMap: (d): string =>
+                            d ? 'fa-caret-down' : 'fa-caret-right',
+                        wrapper: (d) => 'px-2 fas ' + d,
+                    },
                 },
                 {
                     tag: 'span',
                     class: 'px-2',
                     innerText: state.name,
-                    style: { 'user-select': 'none' },
+                    style: { userSelect: 'none' },
                 },
             ],
         }
@@ -45,24 +52,27 @@ export namespace ExpandableGroup {
 
     export function simpleExpandableGroup(
         name: string,
-        contentView: VirtualDOM,
+        contentView: AnyVirtualDOM,
     ) {
         return new ExpandableGroup.View({
             state: new ExpandableGroup.State(name),
             headerView: ExpandableGroup.defaultHeaderView,
             contentView: () => ({
+                tag: 'div',
                 class: defaultBodyClass,
                 children: [contentView],
             }),
         })
     }
 
-    export class View implements VirtualDOM {
+    export class View implements VirtualDOM<'div'> {
         static defaultClass = 'd-flex flex-column '
+
+        public readonly tag = 'div'
         public readonly state: State
 
-        public readonly className: string | Stream$<unknown, string>
-        children: [VirtualDOM, VirtualDOM]
+        public readonly className: AttributeLike<string>
+        children: ChildrenLike
 
         constructor({
             state,
@@ -71,8 +81,8 @@ export namespace ExpandableGroup {
             ...rest
         }: {
             state: State
-            headerView: (state: State) => VirtualDOM
-            contentView: (state: State) => VirtualDOM
+            headerView: (state: State) => AnyVirtualDOM
+            contentView: (state: State) => AnyVirtualDOM
             [_key: string]: unknown
         }) {
             Object.assign(this, { class: View.defaultClass }, rest)
@@ -81,38 +91,19 @@ export namespace ExpandableGroup {
 
             this.children = [
                 {
+                    tag: 'div',
                     children: [headerView(this.state)],
                     onclick: () =>
                         this.state.expanded$.next(
                             !this.state.expanded$.getValue(),
                         ),
                 },
-                child$(this.state.expanded$, (expanded) =>
-                    expanded ? contentView(this.state) : {},
-                ),
+                {
+                    source$: this.state.expanded$,
+                    vdomMap: (expanded) =>
+                        expanded ? contentView(this.state) : { tag: 'div' },
+                },
             ]
-
-            /*
-            this.data = state$.pipe( map( state => ({
-                class: userClasses, style: userStyle,
-                children: {
-                    header: {
-                        children: [headerView( state)],
-                        onclick: () => state.expanded$.next(!state.expanded$.getValue())
-                    },
-                    contentContainer: {
-                        class: "yw-tab-content border flex-grow-1 w-100 rounded",
-                        style:{'min-height':'0px'},
-                        children: {
-                            content: state.expanded$.pipe(
-                                map( expanded  =>{
-                                    return expanded ? contentView(state) : {}
-                                })
-                            )
-                        }
-                    }
-                }
-            })))*/
         }
     }
 }
