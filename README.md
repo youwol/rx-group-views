@@ -1,4 +1,4 @@
-# @youwol/fv-group
+# @youwol/rx-group-views
 
 Grouping widgets using flux-view
 
@@ -7,13 +7,13 @@ This library is part of the hybrid cloud/local ecosystem
 
 ## Links
 
-[Online user-guide](https://l.youwol.com/doc/@youwol/fv-group)
+[Online user-guide](https://l.youwol.com/doc/@youwol/rx-group-views)
 
-[Developers documentation](https://platform.youwol.com/applications/@youwol/cdn-explorer/latest?package=@youwol/fv-group&tab=doc)
+[Developers documentation](https://platform.youwol.com/applications/@youwol/cdn-explorer/latest?package=@youwol/rx-group-views&tab=doc)
 
-[Package on npm](https://www.npmjs.com/package/@youwol/fv-group)
+[Package on npm](https://www.npmjs.com/package/@youwol/rx-group-views)
 
-[Source on GitHub](https://github.com/youwol/fv-group)
+[Source on GitHub](https://github.com/youwol/rx-group-views)
 
 # Installation, Build, Test
 

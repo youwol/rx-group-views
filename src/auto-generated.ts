@@ -1,8 +1,8 @@
 
 const runTimeDependencies = {
     "externals": {
-        "rxjs": "^6.5.5",
-        "@youwol/flux-view": "^1.0.3"
+        "rxjs": "^7.5.6",
+        "@youwol/rx-vdom": "^1.0.1"
     },
     "includedInBundle": {}
 }
@@ -10,30 +10,30 @@ const externals = {
     "rxjs": {
         "commonjs": "rxjs",
         "commonjs2": "rxjs",
-        "root": "rxjs_APIv6"
+        "root": "rxjs_APIv7"
     },
-    "@youwol/flux-view": {
-        "commonjs": "@youwol/flux-view",
-        "commonjs2": "@youwol/flux-view",
-        "root": "@youwol/flux-view_APIv1"
+    "@youwol/rx-vdom": {
+        "commonjs": "@youwol/rx-vdom",
+        "commonjs2": "@youwol/rx-vdom",
+        "root": "@youwol/rx-vdom_APIv1"
     },
     "rxjs/operators": {
         "commonjs": "rxjs/operators",
         "commonjs2": "rxjs/operators",
         "root": [
-            "rxjs_APIv6",
+            "rxjs_APIv7",
             "operators"
         ]
     }
 }
 const exportedSymbols = {
     "rxjs": {
-        "apiKey": "6",
+        "apiKey": "7",
         "exportedSymbol": "rxjs"
     },
-    "@youwol/flux-view": {
+    "@youwol/rx-vdom": {
         "apiKey": "1",
-        "exportedSymbol": "@youwol/flux-view"
+        "exportedSymbol": "@youwol/rx-vdom"
     }
 }
 
@@ -41,26 +41,26 @@ const mainEntry : {entryFile: string,loadDependencies:string[]} = {
     "entryFile": "index.ts",
     "loadDependencies": [
         "rxjs",
-        "@youwol/flux-view"
+        "@youwol/rx-vdom"
     ]
 }
 
 const secondaryEntries : {[k:string]:{entryFile: string, name: string, loadDependencies:string[]}}= {}
 
 const entries = {
-     '@youwol/fv-group': 'index.ts',
-    ...Object.values(secondaryEntries).reduce( (acc,e) => ({...acc, [`@youwol/fv-group/${e.name}`]:e.entryFile}), {})
+     '@youwol/rx-group-views': 'index.ts',
+    ...Object.values(secondaryEntries).reduce( (acc,e) => ({...acc, [`@youwol/rx-group-views/${e.name}`]:e.entryFile}), {})
 }
 export const setup = {
-    name:'@youwol/fv-group',
-        assetId:'QHlvdXdvbC9mdi1ncm91cA==',
-    version:'0.2.5',
+    name:'@youwol/rx-group-views',
+        assetId:'QHlvdXdvbC9yeC1ncm91cC12aWV3cw==',
+    version:'0.3.0-wip',
     shortDescription:"Grouping widgets using flux-view",
-    developerDocumentation:'https://platform.youwol.com/applications/@youwol/cdn-explorer/latest?package=@youwol/fv-group&tab=doc',
-    npmPackage:'https://www.npmjs.com/package/@youwol/fv-group',
-    sourceGithub:'https://github.com/youwol/fv-group',
-    userGuide:'https://l.youwol.com/doc/@youwol/fv-group',
-    apiVersion:'02',
+    developerDocumentation:'https://platform.youwol.com/applications/@youwol/cdn-explorer/latest?package=@youwol/rx-group-views&tab=doc',
+    npmPackage:'https://www.npmjs.com/package/@youwol/rx-group-views',
+    sourceGithub:'https://github.com/youwol/rx-group-views',
+    userGuide:'https://l.youwol.com/doc/@youwol/rx-group-views',
+    apiVersion:'03',
     runTimeDependencies,
     externals,
     exportedSymbols,
@@ -85,7 +85,7 @@ export const setup = {
             modules,
             scripts,
         }).then(() => {
-            return window[`@youwol/fv-group_APIv02`]
+            return window[`@youwol/rx-group-views_APIv03`]
         })
     },
     installAuxiliaryModule: ({name, cdnClient, installParameters}:{
@@ -100,7 +100,7 @@ export const setup = {
         const parameters = installParameters || {}
         const scripts = [
             ...(parameters.scripts || []),
-            `@youwol/fv-group#0.2.5~dist/@youwol/fv-group/${entry.name}.js`
+            `@youwol/rx-group-views#0.3.0-wip~dist/@youwol/rx-group-views/${entry.name}.js`
         ]
         const modules = [
             ...(parameters.modules || []),
@@ -111,7 +111,7 @@ export const setup = {
             modules,
             scripts,
         }).then(() => {
-            return window[`@youwol/fv-group/${entry.name}_APIv02`]
+            return window[`@youwol/rx-group-views/${entry.name}_APIv03`]
         })
     },
     getCdnDependencies(name?: string){
