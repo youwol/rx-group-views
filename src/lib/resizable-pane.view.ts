@@ -1,12 +1,12 @@
 /** @format */
 
-import { attr$, VirtualDOM } from '@youwol/flux-view'
+import { AnyVirtualDOM, VirtualDOM } from '@youwol/rx-vdom'
 import { BehaviorSubject } from 'rxjs'
 
 export type ResizablePaneOrientation = 'left' | 'right'
 
 export function resizablePanel(
-    virtualDOM: VirtualDOM,
+    virtualDOM: AnyVirtualDOM,
     collapsedText: string,
     direction: ResizablePaneOrientation = 'left',
     conf: {
@@ -30,7 +30,7 @@ export function resizablePanel(
             visible: true,
         },
     },
-): VirtualDOM {
+): VirtualDOM<'div'> {
     const width$ =
         conf.width$ ??
         new BehaviorSubject<number>(conf.initProperties?.width ?? 300)
@@ -42,16 +42,22 @@ export function resizablePanel(
         new BehaviorSubject<boolean>(conf.initProperties?.visible ?? true)
     const minWidth = conf.minWidth ?? 0
     return {
-        class: attr$(visible$, (visible) =>
-            visible ? 'd-flex grapes-bg-color fv-text-primary' : 'd-none',
-        ),
+        tag: 'div',
+        class: {
+            source$: visible$,
+            vdomMap: (visible) =>
+                visible ? 'd-flex grapes-bg-color fv-text-primary' : 'd-none',
+        },
         children: [
             {
-                class: attr$(collapsed$, (collapsed) =>
-                    collapsed ? 'd-flex' : 'd-none',
-                ),
+                tag: 'div',
+                class: {
+                    source$: collapsed$,
+                    vdomMap: (collapsed) => (collapsed ? 'd-flex' : 'd-none'),
+                },
                 children: [
                     {
+                        tag: 'div',
                         class: `py-1 resizable-panel-${direction}-collapsed`,
                         innerText: collapsedText,
                     },
@@ -61,15 +67,21 @@ export function resizablePanel(
                 },
             },
             {
-                class: attr$(collapsed$, (collapsed) =>
-                    collapsed ? 'd-none' : 'd-flex',
-                ),
-                style: attr$(width$, (w) => ({
-                    width: `${w}px`,
-                    position: 'relative',
-                })),
+                tag: 'div',
+                class: {
+                    source$: collapsed$,
+                    vdomMap: (collapsed) => (collapsed ? 'd-none' : 'd-flex'),
+                },
+                style: {
+                    source$: width$,
+                    vdomMap: (w) => ({
+                        width: `${w}px`,
+                        position: 'relative',
+                    }),
+                },
                 children: [
                     {
+                        tag: 'div',
                         class: 'd-flex w-100',
                         children: [virtualDOM],
                     },

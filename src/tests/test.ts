@@ -1,8 +1,9 @@
-import { render } from '@youwol/flux-view'
+import { render } from '@youwol/rx-vdom'
 import { ExpandableGroup } from '../index'
 
 test('simple expandable group', () => {
     const vDOM = ExpandableGroup.simpleExpandableGroup('Example', {
+        tag: 'div',
         id: 'content',
         innerText: 'Hello expandable group!',
     })

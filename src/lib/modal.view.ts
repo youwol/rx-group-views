@@ -1,5 +1,5 @@
-import { VirtualDOM } from '@youwol/flux-view'
-import { BehaviorSubject, merge, Subject } from 'rxjs'
+import { AnyVirtualDOM, ChildrenLike, VirtualDOM } from '@youwol/rx-vdom'
+import { merge, Subject } from 'rxjs'
 import { take } from 'rxjs/operators'
 
 export namespace Modal {
@@ -15,7 +15,7 @@ export namespace Modal {
         ) {}
     }
 
-    export class View implements VirtualDOM {
+    export class View implements VirtualDOM<'div'> {
         public readonly state: State
 
         static defaultStyle = {
@@ -34,13 +34,9 @@ export namespace Modal {
         public readonly class: string
         public readonly style: { [key: string]: string }
 
-        public readonly onclick: (
-            ev: MouseEvent & { target: { vDom?: VirtualDOM } },
-        ) => void
+        public readonly onclick: (ev: MouseEvent) => void
 
-        public readonly children: [VirtualDOM]
-
-        public readonly isMousePressed$ = new BehaviorSubject(false)
+        public readonly children: ChildrenLike
 
         constructor({
             state,
@@ -48,7 +44,7 @@ export namespace Modal {
             ...rest
         }: {
             state: State
-            contentView: (State) => VirtualDOM
+            contentView: (State) => AnyVirtualDOM
             [_key: string]: unknown
         }) {
             Object.assign(this, rest)
@@ -74,24 +70,15 @@ export namespace Modal {
             const view = contentView(state)
             this.children = [
                 {
+                    tag: 'div',
                     class: 'd-flex flex-columns justify-content-around mt-auto mb-auto',
                     children: [view],
-                    onmousedown: () => {
-                        this.isMousePressed$.next(true)
-                    },
-                    onmouseup: () => {
-                        this.isMousePressed$.next(false)
-                    },
                 },
             ]
             this.onclick = (
-                ev: MouseEvent & { target: { vDom?: VirtualDOM } },
+                ev: MouseEvent & { target: { vDom?: AnyVirtualDOM } },
             ) => {
-                if (
-                    ev.target.vDom &&
-                    ev.target.vDom == this &&
-                    !this.isMousePressed$.value
-                ) {
+                if (ev.target.vDom && ev.target.vDom == this) {
                     this.state.cancel$.next(ev)
                 }
             }
