@@ -54,7 +54,7 @@ const entries = {
 export const setup = {
     name:'@youwol/rx-group-views',
         assetId:'QHlvdXdvbC9yeC1ncm91cC12aWV3cw==',
-    version:'0.3.0',
+    version:'0.3.1-wip',
     shortDescription:"Grouping widgets using flux-view",
     developerDocumentation:'https://platform.youwol.com/applications/@youwol/cdn-explorer/latest?package=@youwol/rx-group-views&tab=doc',
     npmPackage:'https://www.npmjs.com/package/@youwol/rx-group-views',
@@ -100,7 +100,7 @@ export const setup = {
         const parameters = installParameters || {}
         const scripts = [
             ...(parameters.scripts || []),
-            `@youwol/rx-group-views#0.3.0~dist/@youwol/rx-group-views/${entry.name}.js`
+            `@youwol/rx-group-views#0.3.1-wip~dist/@youwol/rx-group-views/${entry.name}.js`
         ]
         const modules = [
             ...(parameters.modules || []),
