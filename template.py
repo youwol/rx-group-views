@@ -15,7 +15,7 @@ load_dependencies = {
 }
 template = Template(
     path=folder_path,
-    type=PackageType.Library,
+    type=PackageType.LIBRARY,
     name=pkg_json['name'],
     version=pkg_json['version'],
     shortDescription=pkg_json['description'],
@@ -50,5 +50,3 @@ for file in [
         src=folder_path / '.template' / file,
         dst=folder_path / file
     )
-
-
