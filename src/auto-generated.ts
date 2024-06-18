@@ -1,21 +1,21 @@
 
 const runTimeDependencies = {
     "externals": {
-        "rxjs": "^7.5.6",
-        "@youwol/rx-vdom": "^1.0.1"
+        "@youwol/rx-vdom": "^1.0.1",
+        "rxjs": "^7.5.6"
     },
     "includedInBundle": {}
 }
 const externals = {
-    "rxjs": {
-        "commonjs": "rxjs",
-        "commonjs2": "rxjs",
-        "root": "rxjs_APIv7"
-    },
     "@youwol/rx-vdom": {
         "commonjs": "@youwol/rx-vdom",
         "commonjs2": "@youwol/rx-vdom",
         "root": "@youwol/rx-vdom_APIv1"
+    },
+    "rxjs": {
+        "commonjs": "rxjs",
+        "commonjs2": "rxjs",
+        "root": "rxjs_APIv7"
     },
     "rxjs/operators": {
         "commonjs": "rxjs/operators",
@@ -27,13 +27,13 @@ const externals = {
     }
 }
 const exportedSymbols = {
-    "rxjs": {
-        "apiKey": "7",
-        "exportedSymbol": "rxjs"
-    },
     "@youwol/rx-vdom": {
         "apiKey": "1",
         "exportedSymbol": "@youwol/rx-vdom"
+    },
+    "rxjs": {
+        "apiKey": "7",
+        "exportedSymbol": "rxjs"
     }
 }
 
